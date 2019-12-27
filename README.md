@@ -11,3 +11,4 @@
 - 自定义View中使用Navigation
 - 自定义tabbarItem
 - 获取并修改tabbarItem点击事件
+- 添加react-redux
