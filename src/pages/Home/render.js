@@ -28,6 +28,17 @@ export default {
         <Button onPress = {this.jumpToHomeDetail} text = {'跳转到首页详情页'} />
 
         <ColorView />
+
+        <TouchableOpacity onPress={this.changeReducerValue}>
+        <Text>点击修改 reducer 中的值</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={this.changeReducerNetValue}>
+        <Text>点击请求网络修改 reducer 中的值</Text>
+        </TouchableOpacity>
+
+        <Text>reducer中存的值：{this.props.homeText}</Text>
+
       </View>
     )
   }

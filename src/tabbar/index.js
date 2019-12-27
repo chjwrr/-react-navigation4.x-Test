@@ -84,5 +84,4 @@ const TabNavigator = createBottomTabNavigator(
   TabNavigatorConfig
 )
 
-
 export default TabNavigator

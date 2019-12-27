@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Render from './render'
-
+import { connect } from 'react-redux'
 import { SwitchActions, StackActions,  NavigationActions } from 'react-navigation';
+import * as Actions from '../../redux/actions'
+
 
 class Home extends Component<{}> {
   constructor(props){
@@ -12,6 +14,9 @@ class Home extends Component<{}> {
     this.jumpToMy = this.jumpToMy.bind(this)
     this.jumpToTabbar = this.jumpToTabbar.bind(this)
     this.jumpToNoLoginTabbar = this.jumpToNoLoginTabbar.bind(this)
+    this.changeReducerValue = this.changeReducerValue.bind(this)
+    this.changeReducerNetValue = this.changeReducerNetValue.bind(this)
+    this.reduceValue = 0
   }
 
   // 切换根路由->登录路由树
@@ -49,6 +54,16 @@ class Home extends Component<{}> {
     // this.props.navigation.dispatch(SwitchActions.jumpTo({ routeName: 'NoLoginAppRoute' }));
   }
 
+  // 修改reducer中的值
+  changeReducerValue(){
+    this.props.changeReducerValue(this.reduceValue)
+    this.reduceValue += 1
+  }
+
+  changeReducerNetValue(){
+    this.props.changeReducerNetValue()
+  }
+
 
   componentDidMount() {
     this.props.navigation.setParams({ nextValue: 'abc' }); // 此处设置
@@ -61,6 +76,10 @@ class Home extends Component<{}> {
     this.willBlur = this.props.navigation.addListener('willBlur',payload => {});
     // 页面已失去到焦点
     this.didBlur = this.props.navigation.addListener('didBlur',payload => {});
+
+
+
+
 
   }
 
@@ -75,5 +94,20 @@ class Home extends Component<{}> {
     return Render.render.call(this);
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    homeText: state.homeReducer.homeText
+  }
+}
 
-export default Home;
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    changeReducerValue:(value)=>{
+      dispatch(Actions.HomeAction(value))
+    },
+    changeReducerNetValue:()=>{
+      dispatch(Actions.HomeThunkAction())
+    }
+  }
+}
+export default connect( mapStateToProps, mapDispatchToProps )(Home)
